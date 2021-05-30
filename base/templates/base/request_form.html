@@ -1,0 +1,423 @@
+{% extends "base/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block style %}
+
+<style>
+    #body{
+        background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+    }
+
+    #submit_button[disabled]
+    {
+        color: red;
+    }
+</style>
+  
+{% endblock style %}
+
+{% block title %}
+  Request Form
+{% endblock title %}
+
+{% block background %}
+  
+{% endblock background %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="mt-5 p-5 card shadow-lg" style="margin-left:150px; margin-right:150px;">
+            <form enctype='multipart/form-data' method="POST">
+                {%csrf_token%}
+                <h3 style="text-align:center">Log A Request</h3>
+                <hr>
+
+
+
+                
+
+                <div class="row pt-3 mb-3">
+
+                    <div class="mb-3 col">
+                        <label for="" class="form-label">Username</label>
+                        <input type="text" id="" class="form-control shadow" placeholder=" Username" name="username" required>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="disabledSelect" class="form-label">Select Request Type</label>
+                        <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="request_type" required onchange="admSelectCheck(this)"> 
+                            <option>Select...</option>
+                            <option value="0">New Creation</option>
+                            <option value="1" >Role Modification</option>
+                            <option value="2">Branch Change</option>
+                            <option value="3">Password Request</option>
+                        </select>
+                    </div>
+                    
+                    
+            
+                </div>
+
+                <div id="nc" style="display:none">
+
+                    <div class="row">
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Current Branch</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="branch_nc" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Branch 1</option>
+                                <option value="Branch 2" >Branch 2</option>
+                                <option value="Branch 3">Branch 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Application</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="application_nc" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Application 1</option>
+                                <option value="Branch 2" >Application 2 2</option>
+                                <option value="Branch 3">Application 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Line Manager Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="nc_line" required>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Zonal Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="nc_zonal" required>
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Windows ID</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="nc_win" required>
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Role</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="nc_role" required>
+                        </div>
+
+                        
+
+
+
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label for="" class="form-label">Comment</label>
+                        <textarea id="" class="form-control shadow" placeholder="Type comment here" name="comment"></textarea></div>
+
+                    <div class="mb-5">
+                        <label for="" class="form-label">Upload Attachment</label>
+                        <input type="file" id="" class="form-control shadow" style="background-color: #5DA3FA; color:white;" name="attached_file">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-2">
+                        <input type="checkbox" class="custom-control-input" id="agree1" onchange="goFurther1()">
+                        <label class="custom-control-label" for="customControlInline" style="font-size:13px;">By checking this box, you agree to all terms and conditions.</label>
+                    </div>
+
+                    <button class="btn mt-2 shadow"  style="background-color: #5DA3FA; color:white;" id="submit_button1" disabled>Submit</button>
+
+                </div>
+
+
+
+
+
+                <div id="o2" style="display:none">
+
+
+                    <div class="row">
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Current Branch</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="branch_o2" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Branch 1</option>
+                                <option value="Branch 2" >Branch 2</option>
+                                <option value="Branch 3">Branch 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Application</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="application_o2" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Application 1</option>
+                                <option value="Branch 2" >Application 2 2</option>
+                                <option value="Branch 3">Application 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Current Role</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o2_role_c" required>
+                        </div>
+
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">New Role</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o2_role_n" required>
+                        </div>
+
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Line Manager Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o2_line" required>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Zonal Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o2_zonal" required>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label for="" class="form-label">Comment 2</label>
+                        <textarea type="text" id="" class="form-control shadow" placeholder=" Username" name="comment2"></textarea></div>
+
+                    <div class="mb-5">
+                        <label for="" class="form-label">Upload Attachment 2</label>
+                        <input type="file" id="" class="form-control shadow" style="background-color: #5DA3FA; color:white;" name="attached_file2">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-2">
+                        <input type="checkbox" class="custom-control-input" id="agree2" onchange="goFurther2()">
+                        <label class="custom-control-label" for="customControlInline" style="font-size:13px;">By checking this box, you agree to all terms and conditions.</label>
+                    </div>
+
+                    <button class="btn mt-2 shadow"  style="background-color: #5DA3FA; color:white;" id="submit_button2" disabled>Submit</button>
+
+                </div>
+
+
+                <div id="o3" style="display:none">
+
+                    <div class="row">
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Current Branch</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="branch_o2" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Branch 1</option>
+                                <option value="Branch 2" >Branch 2</option>
+                                <option value="Branch 3">Branch 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Application</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="application_o2" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Application 1</option>
+                                <option value="Branch 2" >Application 2 2</option>
+                                <option value="Branch 3">Application 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Current Branch</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o3_branch_c" required>
+                        </div>
+
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">New Branch</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o3_branch_n" required>
+                        </div>
+
+
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Line Manager Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o3_line" required>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="" class="form-label">Zonal Approval</label>
+                            <input type="text" id="" class="form-control shadow" placeholder="Enter..." name="o3_zonal" required>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label for="" class="form-label">Comment 3</label>
+                        <textarea type="text" id="" class="form-control shadow" placeholder=" Username" name="comment3"></textarea></div>
+
+                    <div class="mb-5">
+                        <label for="" class="form-label">Upload Attachment 3</label>
+                        <input type="file" id="" class="form-control shadow" style="background-color: #5DA3FA; color:white;" name="attached_file3">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-2">
+                        <input type="checkbox" class="custom-control-input" id="agree3" onchange="goFurther3()">
+                        <label class="custom-control-label" for="customControlInline" style="font-size:13px;">By checking this box, you agree to all terms and conditions.</label>
+                    </div>
+
+                    <button class="btn mt-2 shadow"  style="background-color: #5DA3FA; color:white;" id="submit_button3" disabled>Submit</button>
+
+                </div>
+
+
+
+                <div id="o4" style="display:none">
+
+                    <div class="row">
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Account Status</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="account_status" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Active">Active</option>
+                                <option value="Branch 2" >Inactive</option>
+                                <!-- <option value="Branch 3">Branch 3</option> -->
+                            </select>
+                        
+
+                        </div>
+
+                        <div class="mb-3 col-6">
+                            <label for="disabledSelect" class="form-label">Select Application</label>
+                            <select id="disabledSelect" class="form-select shadow" style="background-color: #5DA3FA; color:white;" name="application_o4" required onchange="admSelectCheck(this)"> 
+                                <option>Select...</option>
+                                <option value="Branch 1">Application 1</option>
+                                <option value="Branch 2" >Application 2</option>
+                                <option value="Branch 3">Application 3</option>
+                            </select>
+                        
+
+                        </div>
+
+                        
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label for="" class="form-label">Comment 3</label>
+                        <textarea type="text" id="" class="form-control shadow" placeholder=" Username" name="comment3"></textarea></div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Upload Attachment 3</label>
+                        <input type="file" id="" class="form-control shadow" style="background-color: #5DA3FA; color:white;" name="attached_file3">
+                    </div>
+
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2 mb-2">
+                        <input type="checkbox" class="custom-control-input" id="agree" onchange="goFurther()">
+                        <label class="custom-control-label" for="customControlInline" style="font-size:13px;">By checking this box, you agree to all terms and conditions.</label>
+                    </div>
+
+                    <button class="btn mt-2 shadow"  style="background-color: #5DA3FA; color:white;" id="submit_button" disabled>Submit</button>
+
+                </div>
+
+                
+
+                
+                   
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        function admSelectCheck(nameSelect)
+        {
+            if(nameSelect){
+                admOptionValue = nameSelect.value;
+                if(admOptionValue == 0){
+                    document.getElementById("nc").style.display = 'block';
+                    document.getElementById("o2").style.display = 'none';
+                    document.getElementById("o3").style.display = 'none';
+                    document.getElementById("o4").style.display = 'none';
+                    
+                }
+                else if(admOptionValue == 1){
+                    document.getElementById("o2").style.display = 'block';
+                    document.getElementById("nc").style.display = 'none';
+                    document.getElementById("o3").style.display = 'none';
+                    document.getElementById("o4").style.display = 'none';
+                
+                }
+                else if(admOptionValue == 2){
+                    document.getElementById("o3").style.display = 'block';
+                    document.getElementById("nc").style.display = 'none';
+                    document.getElementById("o2").style.display = 'none';
+                    document.getElementById("o4").style.display = 'none';
+                }
+                else if(admOptionValue == 3){
+                    document.getElementById("o3").style.display = 'none';
+                    document.getElementById("nc").style.display = 'none';
+                    document.getElementById("o2").style.display = 'none';
+                    document.getElementById("o4").style.display = 'block';
+                }
+                else{
+                    document.getElementById("nc").style.display = 'none';
+                    document.getElementById("o2").style.display = 'none';
+                    document.getElementById("o2").style.display = 'none';
+                    document.getElementById("o4").style.display = 'none';
+                }
+            }
+            else{
+                document.getElementById("nc").style.display = 'none';
+                document.getElementById("o2").style.display = 'none';
+                document.getElementById("o2").style.display = 'none';
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function goFurther(){
+        
+        if (document.getElementById("agree").checked == true)
+        document.getElementById("submit_button").disabled = false;
+        else
+        document.getElementById("submit_button").disabled = true;
+        }
+
+        function goFurther2(){
+        
+            if (document.getElementById("agree2").checked == true)
+            document.getElementById("submit_button2").disabled = false;
+            else
+            document.getElementById("submit_button2").disabled = true;
+            }
+
+        function goFurther3(){
+    
+            if (document.getElementById("agree3").checked == true)
+            document.getElementById("submit_button3").disabled = false;
+            else
+            document.getElementById("submit_button3").disabled = true;
+            }
+
+
+        function goFurther1(){
+
+            if (document.getElementById("agree1").checked == true)
+            document.getElementById("submit_button1").disabled = false;
+            else
+            document.getElementById("submit_button1").disabled = true;
+            }
+        </script>
+    
+  
+{% endblock body %}
